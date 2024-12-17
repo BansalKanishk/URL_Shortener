@@ -42,9 +42,9 @@ const UserRegistration = () => {
 
   return (
     <div>
-        <div>
+        {/* <div>
             <Header/>
-        </div>
+        </div> */}
         <div className="container text-center mt-5 bg-white p-5 rounded">
         <h2 className="text-2xl font-bold text-black">Create Account</h2>
         <form onSubmit={handleCreateAccount} className="mt-4">

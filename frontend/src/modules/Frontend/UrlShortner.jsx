@@ -28,9 +28,9 @@ const UrlShortener = () => {
 
   return (
     <div>
-      <div>
+      {/* <div>
         <Header/>
-      </div>
+      </div> */}
       <div className="container text-center mt-5 bg-black p-5 rounded">
         <h2 className="text-2xl font-bold text-white">URL Shortener</h2>        
         <h3 className="font-bold text-white mt-5">Paste the URL to be shortened</h3>
