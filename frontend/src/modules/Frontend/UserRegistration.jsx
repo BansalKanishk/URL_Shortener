@@ -1,13 +1,12 @@
 import React, { useState } from "react";
-import { useNavigate } from "react-router-dom"; // Use the useNavigate hook
-import Header from "./Header";
+import { useNavigate } from "react-router-dom";
 
 const UserRegistration = () => {
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [registrationStatus, setRegistrationStatus] = useState(""); // Feedback for registration
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [registrationStatus, setRegistrationStatus] = useState("");
+  const navigate = useNavigate();
 
   // Handle Create Account form submission
   const handleCreateAccount = async (e) => {
@@ -42,9 +41,6 @@ const UserRegistration = () => {
 
   return (
     <div>
-        {/* <div>
-            <Header/>
-        </div> */}
         <div className="container text-center mt-5 bg-white p-5 rounded">
         <h2 className="text-2xl font-bold text-black">Create Account</h2>
         <form onSubmit={handleCreateAccount} className="mt-4">

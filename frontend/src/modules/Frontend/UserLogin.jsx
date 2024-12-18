@@ -1,12 +1,11 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation after successful login
-import Header from "./Header";
 
-const UserLogin = () => {
+const UserLogin = ({setIsLoggedIn}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [loginStatus, setLoginStatus] = useState(""); // Feedback for login
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const [loginStatus, setLoginStatus] = useState("");
+  const navigate = useNavigate();
 
   // Handle Login form submission
   const handleLogin = async (e) => {
@@ -29,10 +28,10 @@ const UserLogin = () => {
 
       if (data.success) {
         setLoginStatus("Login successful!");
-        // Redirect to home page (URL shortener page) after successful login
+        setIsLoggedIn(true); 
         setTimeout(() => {
-          navigate("/"); // Redirect to home page
-        }, 2000); // Delay to show success message before redirecting
+          navigate("/"); 
+        }, 2000); 
       } else {
         setLoginStatus("Error: " + data.error);
       }
@@ -44,9 +43,6 @@ const UserLogin = () => {
 
   return (
     <div>
-        {/* <div>
-            <Header/>
-        </div> */}
         <div className="container text-center mt-5 bg-white p-5 rounded">
         <h2 className="text-2xl font-bold text-black">Login</h2>
         <form onSubmit={handleLogin} className="mt-4">
