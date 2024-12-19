@@ -29,7 +29,7 @@ const UserRegistration = () => {
 
       if (data.success) {
         setRegistrationStatus("Account created successfully!");
-          navigate("/");
+        navigate("/");
       } else {
         setRegistrationStatus("Error: " + data.error);
       }
@@ -40,37 +40,48 @@ const UserRegistration = () => {
   };
 
   return (
-    <div>
-        <div className="container text-center mt-5 bg-white p-5 rounded">
-        <h2 className="text-2xl font-bold text-black">Create Account</h2>
-        <form onSubmit={handleCreateAccount} className="mt-4">
+    <div className="d-flex justify-content-center align-items-center vh-100">
+      <div className="container bg-white p-5 rounded shadow-lg" style={{ maxWidth: '400px' }}>
+        <h2 className="text-center text-primary mb-4">Create Account</h2>
+        <form onSubmit={handleCreateAccount}>
+          <div className="mb-3">
             <input
-            type="text"
-            placeholder="Username"
-            value={username}
-            onChange={(e) => setUsername(e.target.value)}
-            className="form-control mb-3"
+              type="text"
+              placeholder="Username"
+              value={username}
+              onChange={(e) => setUsername(e.target.value)}
+              className="form-control"
             />
+          </div>
+          <div className="mb-3">
             <input
-            type="email"
-            placeholder="Email"
-            value={email}
-            onChange={(e) => setEmail(e.target.value)}
-            className="form-control mb-3"
+              type="email"
+              placeholder="Email"
+              value={email}
+              onChange={(e) => setEmail(e.target.value)}
+              className="form-control"
             />
+          </div>
+          <div className="mb-3">
             <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className="form-control mb-3"
+              type="password"
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className="form-control"
             />
-            <button type="submit" className="btn btn-primary px-4 py-2">
+          </div>
+          <button type="submit" className="btn btn-primary w-100 py-2 mb-3">
             Sign Up
-            </button>
+          </button>
         </form>
-        {registrationStatus && <p className="mt-3">{registrationStatus}</p>}
-        </div>
+
+        {registrationStatus && (
+          <div className={`alert ${registrationStatus.includes('Error') ? 'alert-danger' : 'alert-success'}`} role="alert">
+            {registrationStatus}
+          </div>
+        )}
+      </div>
     </div>
   );
 };

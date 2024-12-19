@@ -8,10 +8,10 @@ const UrlShortener = () => {
 
   // Handle URL shortening
   const handleShortenUrl = async () => {
-    if (!isLoggedIn) {
-      alert("You must be logged in to shorten URLs");
-      return;
-    }
+    // if (!longUrl) {
+    //   alert("Please enter a valid URL.");
+    //   return;
+    // }
 
     try {
       const response = await fetch("http://localhost:5001/api/shorten", {
@@ -29,22 +29,23 @@ const UrlShortener = () => {
       }
     } catch (error) {
       console.error("Error:", error);
+      alert("There was an error processing your request.");
     }
   };
 
   return (
-    <div>
-      <div className="container text-center mt-5 bg-black p-5 rounded">
-        <h2 className="text-2xl font-bold text-white">URL Shortener</h2>
-        
-        {!isLoggedIn ? (
+    <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
+      <div className="container text-center p-5 rounded shadow-lg" style={{ maxWidth: '500px' }}>
+        <h2 className="text-white mb-4">URL Shortener</h2>
+
+        {/* {isLoggedIn ? (
           <div>
             <UserLogin setIsLoggedIn={setIsLoggedIn} />
-            </div>
-        ) : (
+          </div>
+        ) : ( */}
           <div>
-            <h3 className="font-bold text-white mt-5">Paste the URL to be shortened</h3>
-            <div className="m-3 p-4 w-100">
+            <h3 className="text-white font-bold mb-4">Paste the URL to be shortened</h3>
+            <div className="mb-3">
               <input
                 type="text"
                 placeholder="Enter your long URL"
@@ -53,22 +54,22 @@ const UrlShortener = () => {
                 className="form-control"
               />
             </div>
-            <button onClick={handleShortenUrl} className="btn btn-success px-4 py-2">
+            <button onClick={handleShortenUrl} className="btn btn-success w-100 py-2 mb-3">
               Shorten URL
             </button>
 
             {shortUrl && (
               <div className="mt-4">
-                <p className="text-lg text-white">
-                  Short URL : 
-                  <a href={shortUrl} target="_blank" rel="noopener noreferrer">
+                <p className="text-white">
+                  Short URL:{" "}
+                  <a href={shortUrl} target="_blank" rel="noopener noreferrer" className="text-success">
                     {shortUrl}
                   </a>
                 </p>
               </div>
             )}
           </div>
-        )}
+        {/* )} */}
       </div>
     </div>
   );

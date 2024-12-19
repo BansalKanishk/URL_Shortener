@@ -5,7 +5,6 @@ export default function Header() {
   const [user, setUser] = useState(null); // State to hold user information (if logged in)
   const navigate = useNavigate(); // For navigation
 
-
   // Function to handle logout
   const handleLogout = () => {
     setUser(null); // Clear user data (simulating logout)
@@ -26,9 +25,9 @@ export default function Header() {
   };
 
   return (
-    <div className="header-container bg-dark d-flex justify-content-between p-3 m-2">
-      <div className="logo text-white">
-        <h1 onClick={gotoHome}>URL Shortener</h1>
+    <div className="header-container d-flex justify-content-between align-items-center p-3" style={{'backgroundColor':'#585858'}}>
+      <div className="logo text-white cursor-pointer" onClick={gotoHome}>
+      <h1 className="mb-0" style={{ fontWeight: '600' }}>URL Shortener</h1>
       </div>
 
       <div className="user-actions d-flex align-items-center">
@@ -47,7 +46,7 @@ export default function Header() {
           </>
         ) : (
           <>
-            <button onClick={goToLoginPage} className="btn btn-primary mr-3" style={{'marginRight':'12px'}}>
+            <button onClick={goToLoginPage} className="btn btn-primary mx-2">
               Login
             </button>
             <button onClick={goToRegisterPage} className="btn btn-warning">
