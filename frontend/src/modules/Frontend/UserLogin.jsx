@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation after successful login
 
-const UserLogin = ({ setIsLoggedIn }) => {
+const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
   const navigate = useNavigate();
+
 
   // Handle Login form submission
   const handleLogin = async (e) => {
@@ -26,21 +27,28 @@ const UserLogin = ({ setIsLoggedIn }) => {
 
       const data = await response.json();
 
-      if (data.success) {
+     if (data.success) {
         setLoginStatus("Login successful!");
         setIsLoggedIn(true);
-        setTimeout(() => {
+        console.log("as",isLoggedIn) 
+
+        // setTimeout(() => {
           navigate("/");
-        }, 2000);
+        // }, 2000);
       } else {
         setLoginStatus("Error: " + data.error);
+        setIsLoggedIn(false)
       }
+
     } catch (error) {
+
       setLoginStatus("Error logging in. Please try again.");
       console.error("Error:", error);
     }
   };
-
+  useEffect(() => {
+    console.log("Current isLoggedIn:", isLoggedIn);
+  }, [isLoggedIn]); 
   return (
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="container bg-white p-5 rounded shadow-lg" style={{ maxWidth: '400px' }}>

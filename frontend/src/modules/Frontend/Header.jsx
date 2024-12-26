@@ -1,27 +1,58 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Header() {
-  const [user, setUser] = useState(null); // State to hold user information (if logged in)
+export default function Header({isLoggedIn}) {
+  const [user, setUser] = useState(null);
   const navigate = useNavigate(); // For navigation
 
-  // Function to handle logout
+   // Function to fetch the logged-in user's data
+   const getUser = async () => {
+    if (!isLoggedIn) {
+      return; // If not logged in, do not fetch user data
+    }
+
+    try {
+      const response = await fetch("http://localhost:5001/users", { // Assuming '/me' for logged-in user's data
+        method: "GET",
+        headers: {
+          "Content-Type": "application/json",
+          // Add Authorization if you use tokens
+          // Authorization: `Bearer ${localStorage.getItem('token')}`,
+        },
+      });
+
+      const data = await response.json();
+      console.log("User Data: ", data);
+
+      if (data.success && data.user) {
+        setUser(data.user);  // Set user data from response
+      } else {
+        alert("Error: " + data.error);
+      }
+    } catch (error) {
+      console.error("Error:", error);
+      alert("There was an error processing your request.");
+    }
+  };
+
+  useEffect(() => {
+    getUser();
+  }, [isLoggedIn]); 
+
   const handleLogout = () => {
-    setUser(null); // Clear user data (simulating logout)
-    navigate("/"); // Navigate to homepage after logout
+    setUser(null);
+    navigate("/");
   };
   const gotoHome =() =>{
     navigate("/");
   }
 
-  // Function to navigate to login page
   const goToLoginPage = () => {
-    navigate("/login"); // Navigate to login page
+    navigate("/login");
   };
 
-  // Function to navigate to register page
   const goToRegisterPage = () => {
-    navigate("/register"); // Navigate to registration page
+    navigate("/register");
   };
 
   return (
@@ -31,15 +62,15 @@ export default function Header() {
       </div>
 
       <div className="user-actions d-flex align-items-center">
-        {user ? (
+        {isLoggedIn ? (
           <>
-            <span className="username">{user.name}</span>
-            <img
+            {/* <span className="username">{user.name}</span> */}
+            {/* <img
               src={user.icon}
               alt="User Icon"
               className="user-icon rounded-circle ml-2"
               style={{ width: "30px", height: "30px" }}
-            />
+            /> */}
             <button onClick={handleLogout} className="btn btn-danger ml-3">
               Logout
             </button>

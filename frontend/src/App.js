@@ -7,15 +7,16 @@ import Header from './modules/Frontend/Header';
 import { useState } from 'react';
 
 function App() {
-  const [user, setUser] = useState(null);
+  const [user, setUser] = useState(null);  
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   return (
     <Router>
-      <Header user={user} setUser={setUser} /> 
+      <Header user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> 
       <Routes>
         <Route path="/" element={<UrlShortener />} />
         <Route path="/register" element={<UserRegistration />} />
-        <Route path="/login" element={<UserLogin setUser={setUser} />} /> {/* Pass setUser to UserLogin */}
+        <Route path="/login" element={      <UserLogin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
       </Routes>
     </Router>
   );

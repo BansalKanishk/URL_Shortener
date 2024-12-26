@@ -4,7 +4,6 @@ import UserLogin from "./UserLogin";
 const UrlShortener = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   // Handle URL shortening
   const handleShortenUrl = async () => {
@@ -37,12 +36,6 @@ const UrlShortener = () => {
     <div className="d-flex justify-content-center align-items-center vh-100 bg-dark">
       <div className="container text-center p-5 rounded shadow-lg" style={{ maxWidth: '500px' }}>
         <h2 className="text-white mb-4">URL Shortener</h2>
-
-        {/* {isLoggedIn ? (
-          <div>
-            <UserLogin setIsLoggedIn={setIsLoggedIn} />
-          </div>
-        ) : ( */}
           <div>
             <h3 className="text-white font-bold mb-4">Paste the URL to be shortened</h3>
             <div className="mb-3">
@@ -69,7 +62,6 @@ const UrlShortener = () => {
               </div>
             )}
           </div>
-        {/* )} */}
       </div>
     </div>
   );

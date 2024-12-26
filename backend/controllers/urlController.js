@@ -2,7 +2,6 @@ const shortid = require('shortid');
 require('dotenv').config();
 
 const baseUrl = process.env.BASE_URL ;
-console.log("asassa",baseUrl)
 // In-memory URL store (temporary)
 const urlDatabase = {};
 
@@ -35,7 +34,7 @@ exports.shortenUrl = (req, res) => {
     const urlCode = shortid.generate();
     const shortUrl = `${baseUrl}/${urlCode}`;
 
-    urlDatabase[urlCode] = longUrl; // Store in-memory
+    urlDatabase[urlCode] = longUrl;
 
     res.json({ shortUrl });
   } catch (error) {
@@ -44,13 +43,13 @@ exports.shortenUrl = (req, res) => {
 };
 
 // Redirect to original URL
-exports.redirectUrl = (req, res) => {
-  const { code } = req.params;
-  const longUrl = urlDatabase[code];
+// exports.redirectUrl = (req, res) => {
+//   const { code } = req.params;
+//   const longUrl = urlDatabase[code];
 
-  if (longUrl) {
-    res.redirect(longUrl);
-  } else {
-    res.status(404).json({ error: 'No URL found' });
-  }
-};
+//   if (longUrl) {
+//     res.redirect(longUrl);
+//   } else {
+//     res.status(404).json({ error: 'No URL found' });
+//   }
+// };
