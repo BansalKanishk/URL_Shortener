@@ -6,50 +6,72 @@ const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
   const navigate = useNavigate();
+  const [isLoading, setIsLoading]= useState(false);
 
 
   // Handle Login form submission
   const handleLogin = async (e) => {
     e.preventDefault();
-
+  
     // Basic form validation
     if (!email || !password) {
       setLoginStatus("Please fill out all fields.");
       return;
     }
-
+  
     try {
+      setIsLoading(true);
+      console.log('is',isLoading)
       const response = await fetch("http://localhost:5001/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ email, password }),
       });
-
+  
       const data = await response.json();
-
-     if (data.success) {
+  
+      if (data.success) {
         setLoginStatus("Login successful!");
-        setIsLoggedIn(true);
-        console.log("as",isLoggedIn) 
-
-        // setTimeout(() => {
+        setTimeout(() => {
           navigate("/");
-        // }, 2000);
+        }, 2000);
       } else {
         setLoginStatus("Error: " + data.error);
-        setIsLoggedIn(false)
+        setIsLoggedIn(false);
       }
-
     } catch (error) {
-
       setLoginStatus("Error logging in. Please try again.");
       console.error("Error:", error);
+    } finally {
+      setTimeout(() => {
+        setIsLoading(false); 
+
+      }, 2000);
     }
   };
-  useEffect(() => {
-    console.log("Current isLoggedIn:", isLoggedIn);
-  }, [isLoggedIn]); 
+
   return (
+    <>
+    {isLoading && (
+        <div
+          style={{
+            position: "fixed",
+            top: 0,
+            left: 0,
+            width: "100%",
+            height: "100%",
+            backgroundColor: "rgba(0, 0, 0, 0.5)",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            zIndex: 9999,
+          }}
+        >
+          <div className="spinner-border text-light" role="status">
+            <span className="visually-hidden">Loading...</span>
+          </div>
+        </div>
+      )}
     <div className="d-flex justify-content-center align-items-center vh-100">
       <div className="container bg-white p-5 rounded shadow-lg" style={{ maxWidth: '400px' }}>
         <h2 className="text-center text-primary mb-4">Login</h2>
@@ -77,16 +99,18 @@ const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
           </button>
         </form>
 
-        {loginStatus && (
+        {/* {loginStatus && (
           <div
             className={`alert ${loginStatus.includes('Error') ? 'alert-danger' : 'alert-success'}`}
             role="alert"
           >
             {loginStatus}
           </div>
-        )}
+        )} */}
       </div>
     </div>
+    </>
+
   );
 };
 

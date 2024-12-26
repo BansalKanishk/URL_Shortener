@@ -5,6 +5,7 @@ import UserRegistration from './modules/Frontend/UserRegistration';
 import UserLogin from './modules/Frontend/UserLogin';
 import Header from './modules/Frontend/Header';
 import { useState } from 'react';
+import UserLogout from './modules/Frontend/UserLogout';
 
 function App() {
   const [user, setUser] = useState(null);  
@@ -16,7 +17,9 @@ function App() {
       <Routes>
         <Route path="/" element={<UrlShortener />} />
         <Route path="/register" element={<UserRegistration />} />
-        <Route path="/login" element={      <UserLogin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<UserLogin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/logout" element={<UserLogout />} />
+
       </Routes>
     </Router>
   );
