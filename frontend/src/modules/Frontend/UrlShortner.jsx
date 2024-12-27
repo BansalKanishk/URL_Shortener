@@ -4,6 +4,28 @@ import UserLogin from "./UserLogin";
 const UrlShortener = () => {
   const [longUrl, setLongUrl] = useState("");
   const [shortUrl, setShortUrl] = useState("");
+  const [isValid, setIsValid] = useState(true);
+
+  const isValidUrl = (url) => {
+    try {
+      new URL(url); // Check if URL is valid
+      console.log("DATATATATA",isValid)
+      return true;
+    } catch (error) {
+      return false;
+    }
+  };
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setLongUrl(value);
+
+    // Revalidate URL each time the user types
+    if (isValidUrl(value)) {
+      setIsValid(true); // Mark URL as valid
+    } else {
+      setIsValid(false); // Mark URL as invalid
+    }
+  };
 
   // Handle URL shortening
   const handleShortenUrl = async () => {
@@ -11,6 +33,12 @@ const UrlShortener = () => {
     //   alert("Please enter a valid URL.");
     //   return;
     // }
+    if (isValidUrl(longUrl)) {
+      console.log("Valid URL to shorten: ", longUrl);
+      // Your URL shortening logic here
+    } else {
+      setIsValid(false); // Set URL as invalid if it fails validation
+    }
 
     try {
       const response = await fetch("http://localhost:5001/api/shorten", {
@@ -43,11 +71,14 @@ const UrlShortener = () => {
                 type="text"
                 placeholder="Enter your long URL"
                 value={longUrl}
-                onChange={(e) => setLongUrl(e.target.value)}
+                onChange={handleChange} 
                 className="form-control"
+                required
               />
+              {!isValid && <p className="text-danger">Please enter a valid URL.</p>}
+
             </div>
-            <button onClick={handleShortenUrl} className="btn btn-success w-100 py-2 mb-3">
+            <button onClick={handleShortenUrl} disabled={!longUrl || !isValid} className="btn btn-success w-100 py-2 mb-3">
               Shorten URL
             </button>
 
