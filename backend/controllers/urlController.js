@@ -43,13 +43,13 @@ exports.shortenUrl = (req, res) => {
 };
 
 // Redirect to original URL
-// exports.redirectUrl = (req, res) => {
-//   const { code } = req.params;
-//   const longUrl = urlDatabase[code];
+exports.redirectUrl = (req, res) => {
+  const { code } = req.params;
+  const longUrl = urlDatabase[code];
 
-//   if (longUrl) {
-//     res.redirect(longUrl);
-//   } else {
-//     res.status(404).json({ error: 'No URL found' });
-//   }
-// };
+  if (longUrl) {
+    res.redirect(longUrl);
+  } else {
+    res.status(404).json({ error: 'No URL found' });
+  }
+};
