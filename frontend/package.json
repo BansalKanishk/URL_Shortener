@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@mui/icons-material": "^6.3.0",
     "body-parser": "^1.20.3",
     "bootstrap": "^5.3.3",
     "bootstrap-icons": "^1.11.3",

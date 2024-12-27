@@ -10,16 +10,16 @@ import UserLogout from './modules/Frontend/UserLogout';
 function App() {
   const [user, setUser] = useState(null);  
   const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [userEmail,setUserEmail] = useState("");
 
   return (
     <Router>
-      <Header user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} /> 
+      <Header user={user} setUser={setUser} isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} userEmail={userEmail}/> 
       <Routes>
         <Route path="/" element={<UrlShortener />} />
         <Route path="/register" element={<UserRegistration />} />
-        <Route path="/login" element={<UserLogin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} />} />
+        <Route path="/login" element={<UserLogin isLoggedIn={isLoggedIn} setIsLoggedIn={setIsLoggedIn} setUserEmail={setUserEmail}/>} />
         <Route path="/logout" element={<UserLogout />} />
-
       </Routes>
     </Router>
   );

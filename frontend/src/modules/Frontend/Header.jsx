@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
-export default function Header({isLoggedIn, setIsLoggedIn}) {
-  const [user, setUser] = useState(null);
+export default function Header({isLoggedIn, setIsLoggedIn,userEmail}) {
+  const [user, setUser] = useState([]);
   const navigate = useNavigate(); // For navigation
   const [loadingSpinner, setLoadingSpinner] = useState(false);
 
+ 
    // Function to fetch the logged-in user's data
    const getUser = async () => {
     if (!isLoggedIn) {
@@ -21,10 +22,16 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
       });
 
       const data = await response.json();
-      // const username = response.users.map(user => user.username);
+      
 
-      if (data.success && data.user) {
-        setUser(data.user);  // Set user data from response
+      if (data) {
+        // const usernames = data.users.map(user => user.username);
+        const username = data.users
+        .filter(user => user.email === userEmail)
+        .map(user => user.username)[0];
+
+        setUser(username);  // Set user data from response
+        console.log("AAdddsd",user)
       } else {
         // alert("Error: " + data.error);
       }
@@ -64,6 +71,7 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
   const goToRegisterPage = () => {
     navigate("/register");
   };
+  console.log("isLoggedIn",isLoggedIn)
 
   return (
     <>
@@ -96,8 +104,12 @@ export default function Header({isLoggedIn, setIsLoggedIn}) {
         {isLoggedIn ? (
           <>
             {/* <span className="username">{user.name}</span> */}
-           
-            <button onClick={handleLogout} className="btn btn-danger ml-3">
+            <div className="text-black px-4 d-flex bg-white p-2 rounded-5">{user}
+            <span class="material-symbols-outlined" style={{ marginLeft: '8px' }}>
+            face
+            </span>
+            </div>
+            <button type="button" onClick={handleLogout} className="btn btn-danger px-4 rounded-5" style={{ marginLeft: '8px' , padding:'8px'}}>
               Logout
             </button>
           </>

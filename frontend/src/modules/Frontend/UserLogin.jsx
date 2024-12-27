@@ -1,13 +1,12 @@
 import React, { useState,useEffect } from "react";
 import { useNavigate } from "react-router-dom"; // For navigation after successful login
 
-const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
+const UserLogin = ({isLoggedIn, setIsLoggedIn ,setUserEmail}) => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loginStatus, setLoginStatus] = useState("");
   const navigate = useNavigate();
   const [isLoading, setIsLoading]= useState(false);
-
 
   // Handle Login form submission
   const handleLogin = async (e) => {
@@ -21,7 +20,6 @@ const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
   
     try {
       setIsLoading(true);
-      console.log('is',isLoading)
       const response = await fetch("http://localhost:5001/api/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -32,6 +30,9 @@ const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
   
       if (data.success) {
         setLoginStatus("Login successful!");
+        setIsLoggedIn(true);
+        console.log("asassa",data.email)
+        setUserEmail(data.email);
         setTimeout(() => {
           navigate("/");
         }, 2000);
@@ -45,7 +46,6 @@ const UserLogin = ({isLoggedIn, setIsLoggedIn }) => {
     } finally {
       setTimeout(() => {
         setIsLoading(false); 
-
       }, 2000);
     }
   };
